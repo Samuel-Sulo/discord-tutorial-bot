@@ -1,0 +1,21 @@
+{
+  "name": "discord-tutorial-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Samuel-Sulo/discord-tutorial-bot.git",
+  "license": "MIT",
+  "author": {
+    "name": "Samuel Sulo"
+  },
+  "scripts": {
+    "start": "node ./src/bot.js",
+    "dev": "nodemon ./src/bot.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.6.0",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
