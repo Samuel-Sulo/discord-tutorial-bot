@@ -1,15 +1,30 @@
 require('dotenv').config();
-const { Client } = require('discord.js');
+const { Client, GatewayIntentBits } = require('discord.js');
+const { DISCORDJS_BOT_TOKEN, COMMAND_PREFIX } = require('./constants');
+const { CommandBuilder } = require('./commands');
 
-const { DISCORDJS_BOT_TOKEN } = require('./constants');
-const client = new Client({ intents: 'MessageContent' });
+const client = new Client({ intents: [
+  GatewayIntentBits.DirectMessages,
+  GatewayIntentBits.Guilds,
+  GatewayIntentBits.GuildMessages,
+  GatewayIntentBits.MessageContent
+]});
 
 client.on('ready', () => {
   console.log(`${client.user.tag} has logged in.`)
 });
 
 client.on('messageCreate', (message) => {
-  console.log(message.content);
+  if (message.author.bot) {
+    return;
+  }
+  if (message.content.startsWith(COMMAND_PREFIX)) {
+    const command = new CommandBuilder(message).build();
+    if (!command) {
+      return;
+    }
+    command.execute();
+  }
 });
 
 client.login(DISCORDJS_BOT_TOKEN);
